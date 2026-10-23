@@ -1,8 +1,8 @@
 {
-  "client": "Example Corp (owner: Alice)",
+  "client": "Example Corp (owner: Alice, CTO)",
   "in_scope": ["staging.example.com", "10.0.0.0/24"],
   "out_of_scope": ["prod.example.com", "third-party.payments.com", "production database"],
   "window": "2026-11-01T09:00Z/2026-11-01T18:00Z",
   "techniques": ["non_destructive"],
-  "confirmed_by": "Alice (CTO) via signed authorization email 2026-10-20"
+  "confirmed_by": "Alice via signed authorization email 2026-10-20"
 }

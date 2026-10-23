@@ -1,8 +1,8 @@
 # Security Assessment Report — <Target>
 
-- **Date / window**: 
-- **Authorizer**: 
-- **Assessor**: 
+- **Date / window**:
+- **Authorizer**:
+- **Assessor**:
 - **Scope reference**: scope-memo.md (attached)
 
 ## Summary
@@ -18,15 +18,15 @@ Order by risk. One block per finding:
 - **Asset**: host/path
 - **Evidence**: minimal reproducing request or code path, with response/behavior
 - **Impact**: what an attacker can actually do, from what starting position
-- **Root cause**: 
+- **Root cause**:
 - **Remediation**: the minimal change that closes it, with the file/config/endpoint to touch
 - **Verify after fix**: how to confirm it no longer reproduces
 
 ## Remediation plan
 
-- **This week**: 
-- **This month**: 
-- **Ongoing**: 
+- **This week**:
+- **This month**:
+- **Ongoing**:
 
 ## Out of scope / not tested
 

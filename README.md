@@ -2,7 +2,7 @@
 
 A Codex / OpenAI-style **skill** that turns a coding agent into a disciplined vulnerability assessor.
 
-It authorization-gates every run: no active probing without a confirmed scope memo, static analysis first when source is available, verification to kill false positives, and a remediation-ready report as the deliverable.
+Every run is authorization-gated: no active probing without a confirmed scope memo, static analysis first when the target's source is available, verification to kill false positives, and a remediation-ready report as the deliverable.
 
 ## Structure
 
@@ -13,8 +13,8 @@ vuln-hunter/
 │   ├── workflow.md             # stage-by-stage procedure + authorization criteria
 │   └── tools.md                # toolchain: nuclei, ZAP, ffuf, semgrep, gosec, bandit, trivy
 ├── assets/
-│   ├── scope-memo.md           # the authorization document a run must start with
-│   └── report-template.md      # findings → remediation report shape
+│   ├── scope-memo.md           # the authorization document every run must start with
+│   └── report-template.md      # findings -> remediation report shape
 └── scripts/
     ├── check_scope.py          # validates a machine-readable scope file
     └── example-scope.json      # example of a passing scope
@@ -24,13 +24,13 @@ vuln-hunter/
 
 The folder is installable as-is. Put it in your skills directory:
 
-```
+```bash
 mkdir -p ~/.codex/skills && cp -r vuln-hunter ~/.codex/skills/
 ```
 
 or install from this repo with the skill-installer pattern:
 
-```
+```bash
 python scripts/install-skill-from-github.py --repo <you>/<repo> --path vuln-hunter
 ```
 
@@ -39,7 +39,7 @@ Then invoke with `$vuln-hunter`.
 ## What it does
 
 1. Requires a filled, confirmed scope memo before any active test.
-2. Recon → scan → verify → report, static analysis preferred when the target's source is in the working directory.
+2. Recon -> scan -> verify -> report; prefers static analysis when the target's source is in the working directory.
 3. Produces `report.md`: severity-ranked findings with reproducible evidence and minimal remediation, ordered by risk.
 
 ## Rules that do not change

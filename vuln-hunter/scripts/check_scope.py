@@ -1,4 +1,4 @@
-"""Validate a machine-readable scope file before any active testing.
+"""Validate a machine-readable scope file before any active test.
 
 Usage: python check_scope.py <scope.json>
 Exits 0 when the scope is complete and confirmed, non-zero otherwise.
@@ -15,6 +15,7 @@ REQUIRED = [
 ]
 
 ALLOWED_TECHNIQUES_DEFAULT = {"non_destructive"}
+DESTRUCTIVE = {"dos", "destructive", "mutation", "social_engineering"}
 
 
 def main() -> int:
@@ -23,21 +24,21 @@ def main() -> int:
         return 2
 
     try:
-        data = json.load(open(sys.argv[1], encoding="utf-8"))
+        with open(sys.argv[1], encoding="utf-8") as fh:
+            data = json.load(fh)
     except (OSError, json.JSONDecodeError) as exc:
         print(f"scope file unreadable: {exc}", file=sys.stderr)
         return 1
 
     errors = []
     for field in REQUIRED:
-        value = data.get(field)
-        if not value:
+        if not data.get(field):
             errors.append(f"missing or empty field: {field}")
 
-    techniques = data.get("techniques") or ALLOWED_TECHNIQUES_DEFAULT
-    destructive = {t for t in techniques if t in {"dos", "destructive", "mutation", "social_engineering"}}
-    if destructive:
-        errors.append(f"destructive techniques present but not allowed by this skill: {sorted(destructive)}")
+    techniques = set(data.get("techniques") or ALLOWED_TECHNIQUES_DEFAULT)
+    bad = sorted(techniques & DESTRUCTIVE)
+    if bad:
+        errors.append(f"destructive techniques present but not allowed by this skill: {bad}")
 
     if errors:
         print("scope not acceptable:", file=sys.stderr)

@@ -1,0 +1,4 @@
+interface:
+  display_name: "vuln-hunter"
+  short_description: "Authorization-gated vulnerability assessment"
+  default_prompt: "Run an authorization-gated vulnerability assessment of the target in scope: <target>"

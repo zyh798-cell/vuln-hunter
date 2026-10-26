@@ -108,12 +108,15 @@ On exit:
 
 Progress over persistence. A failing tool or API never justifies a loop.
 
-- **Max one retry.** Any command or tool call that fails (non-zero exit, timeout, connection error, 5xx) may be retried **at most once**. After the second failure, stop using that tool for this run: mark the check `skipped (tool failure)` in `findings/` and continue with the remaining checks.
+- **Max one retry (two attempts total).** Any command or tool call that fails (non-zero exit, timeout, connection error, 5xx) may be retried **at most once** — one original attempt plus one retry, never more. After the second failure, stop using that tool for this run: mark the check `skipped (tool failure)` in `findings/` and continue with the remaining checks.
+- **Backoff interval is mandatory.** The single retry is never immediate: wait **5 seconds** before re-attempting, or **10 seconds** when the failure was a timeout or connection error. Immediate re-issuing counts as an identical retry and is forbidden.
 - **No identical retries.** A retry must change something (narrower target, lower rate, smaller sub-check). Otherwise skip straight to recording the failure.
 - **Explicit timeouts.** Every tool call gets a timeout; exceeding it counts as a failure and follows the one-retry rule.
 - **429 / rate-limit means stop, not retry.** On HTTP 429 Too Many Requests or an explicit rate-limit signal: halt that tool immediately, record the limit, and continue elsewhere. Never re-issue the same request.
 - **Environment failures degrade, never loop.** If Docker is missing or its daemon is not running, a tool errors out, or the 429 case above triggers: do **not** keep retrying the same call. Drop the offending tool, degrade the run to **pure static code analysis** mode, and finish Phases 3–4 with static-only evidence.
 - **Degrade, don't stall.** In static-only mode, print the `DEGRADED` status line, complete the remaining phases, and state the degradation prominently in the report's limitations.
+- **Report write fallback.** If writing `./output/vuln_hunter_report.md` fails after its one retry, output the complete report in the conversation instead and record the write failure in `findings/` — the deliverable must never be silently lost.
+- **Stop conditions (any one ends active work for the run):** two total failures on the same call, HTTP 429, authorization window expired, or scope evidence in doubt.
 - **Hard time budget.** The authorization window is a cap. If it is about to close, stop active work and report coverage as-is.
 - Every failure and skip is recorded in `findings/` so the report can account for it.
 

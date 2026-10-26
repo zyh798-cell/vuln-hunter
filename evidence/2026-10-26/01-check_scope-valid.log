@@ -1,0 +1,6 @@
+# captured: 2026-10-26T21:41:59+08:00
+# code-version: 5c3fe2a35aa20898da343347072c8b3d74b504c6
+# command: python vuln-hunter/scripts/check_scope.py vuln-hunter/scripts/example-scope.json
+
+scope OK: 2 in-scope asset(s), confirmed by Alice via signed authorization email 2026-10-20
+exit-code: 0

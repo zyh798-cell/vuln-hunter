@@ -1,0 +1,12 @@
+# captured: 2026-10-26T21:41:59+08:00
+# code-version: 5c3fe2a35aa20898da343347072c8b3d74b504c6
+# command: python vuln-hunter/scripts/check_scope.py <invalid-scope>
+
+scope not acceptable:
+  - missing or empty field: client
+  - missing or empty field: in_scope
+  - missing or empty field: out_of_scope
+  - missing or empty field: window
+  - missing or empty field: confirmed_by
+  - destructive techniques present but not allowed by this skill: ['dos']
+exit-code: 1

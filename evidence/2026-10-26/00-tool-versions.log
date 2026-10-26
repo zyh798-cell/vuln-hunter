@@ -1,0 +1,14 @@
+# captured: 2026-10-26T21:41:57+08:00
+# code-version: 5c3fe2a35aa20898da343347072c8b3d74b504c6
+# command: tool versions
+
+[nuclei]
+[[34mINF[0m] Nuclei Engine Version: v3.11.1
+[trivy]
+Version: 0.76.1
+[bandit]
+__main__.py 1.9.4
+[python]
+Python 3.13.14
+[git HEAD]
+5c3fe2a35aa20898da343347072c8b3d74b504c6
